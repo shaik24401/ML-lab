@@ -1,0 +1,30 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+df=pd.read_csv("/home/admin1/Desktop/sushma.csv")
+df.head()
+class_type_output = df["class_type"]
+df = df.drop("class_type",axis=1).drop("animal_name",axis=1)
+print(df)
+from sklearn.model_selection import train_test_split
+x_train,x_test, y_train, y_test = train_test_split(df,class_type_output,test_size=0.20)
+
+from sklearn.tree import DecisionTreeClassifier
+classifier = DecisionTreeClassifier()
+classifier.fit(x_train, y_train)
+
+y_prediction = classifier.predict(x_test)
+y_prediction
+
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+confusion_matrix(y_test,y_prediction)
+
+print(classification_report(y_test, y_prediction))
+print(accuracy_score(y_test, y_prediction))
+
+predicted_class= list(y_prediction)
+actual_class=list(y_test)
+for i in range (len(predicted_class)):
+    print("predicted class=",predicted_class[i],"\tActual class=",actual_class[i])
+    
+    
