@@ -1,0 +1,98 @@
+def getMode(numbers):
+    max_occur = -1
+    if len(numbers) == 0:
+        return None
+    else:
+        occurences = {}
+        for i in numbers:
+            if occurences.get(i) == None:
+                occurences[i] = 1
+            else:
+                occurences[i] += 1
+            if occurences[i] > max_occur:
+                max_occur = occurences[i]
+    
+    # get max occurence number
+    for i in occurences:
+        if occurences[i] == max_occur:
+            return i
+    return None
+
+
+def getMean(numbers):
+    if len(numbers) == 0:
+        return None
+    else:
+        current_sum = 0
+        for i in numbers:
+            current_sum += i
+            current_avg = current_sum/len(numbers)
+        return current_avg
+
+
+def getMedian():
+    numbers = []
+    inp = 0
+    while True:
+        inp = int(input("Enter a number OR type 'exit'"))
+        if inp == 'exit':
+            break
+        else:
+            numbers.append(inp)
+    if len(numbers) == 0:
+        return None
+    else:
+        middle_index = len(numbers)//2
+        return numbers[middle_index]
+
+
+def getStandardDeviation(numbers):
+    if len(numbers) == 0:
+        return 0
+    else:
+        mean = getMean(numbers)
+        std_deviation = 0
+        for i in numbers:
+            std_deviation += (i - mean)**2
+        return (std_deviation/len(numbers))**0.5
+
+
+def getVariance(numbers):
+    return getStandardDeviation(numbers)**2
+
+
+def getNormalization(features):
+    x_min = min(features)
+    x_max = max(features)
+    normalized_vals = []
+    for i in features:
+        normalized_vals.append((i - x_min)/(x_max - x_min))
+    return normalized_vals
+getNormalization([10,20,30,40])
+
+
+def getStandardization(features):
+    mean = getMean(features)
+    std_deviation = getStandardDeviation(features)
+    standardized_vals = []
+    for i in features:
+        standardized_vals.append((i - mean)/std_deviation)
+    return standardized_vals
+getStandardization([10,20,30,40])
+
+
+
+# MinMax Normalization
+def doMinMaxNormalization(numbers):
+    result = []
+    if len(numbers) == 0:
+        return result
+    else:
+        min_value = min(numbers)
+        max_value = max(numbers)
+        for i in numbers:
+            result.append((i - min_value)/(max_value - min_value))
+        return result
+
+features = [100000,-2,50,12,700,9000]
+print(doMinMaxNormalization(features))
